@@ -26,7 +26,7 @@ npm install
 npm run tests
 ```
 
-# Run a Single Text
+# Run a Single Test
 
 > ℹ️ Double-check you are in the `scripts` directory.
 
