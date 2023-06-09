@@ -1,10 +1,10 @@
-export type maxLength = number | undefined;
-export type textSuffix = string | undefined;
+export type MaxLength = number | undefined;
+export type TextSuffix = string | undefined;
 
 export const truncateText = (
   text: string,
-  maxLength: maxLength = 150,
-  suffix: textSuffix = "..."
+  maxLength: MaxLength = 150,
+  suffix: TextSuffix = "..."
 ): string => {
   let result: string = text;
 

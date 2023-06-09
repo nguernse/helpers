@@ -1,5 +1,5 @@
-export type typeEnvironment = string | undefined | null;
-export enum enumEnvironments {
+export type NodeEnvironment = string | undefined | null;
+export enum EnvironmentOptions {
   LOCAL = "dev",
   DEVELOPMENT = "dev",
   STAGING = "staging",
@@ -7,5 +7,5 @@ export enum enumEnvironments {
 }
 
 export const getEnvironment = (
-  env: typeEnvironment = process.env.NODE_ENV
-): typeEnvironment => env;
+  env: NodeEnvironment = process.env.NODE_ENV
+): NodeEnvironment => env;

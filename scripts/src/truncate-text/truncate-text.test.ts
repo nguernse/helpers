@@ -1,7 +1,7 @@
-import { maxLength, textSuffix, truncateText } from "./truncate-text";
+import { MaxLength, TextSuffix, truncateText } from "./truncate-text";
 
 interface TestDataInterface {
-  input: [string, maxLength, textSuffix];
+  input: [string, MaxLength, TextSuffix];
   output: string;
 }
 

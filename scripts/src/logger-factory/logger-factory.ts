@@ -1,6 +1,6 @@
 import {
-  typeEnvironment,
-  enumEnvironments,
+  NodeEnvironment,
+  EnvironmentOptions,
   getEnvironment,
 } from "../get-environment/get-environment";
 
@@ -22,7 +22,7 @@ export class ProductionLogger implements ILogger {
   info(message: string): void {}
   warn(message: string): void {
     console.warn(
-      `::${enumEnvironments.PRODUCTION}::`,
+      `::${EnvironmentOptions.PRODUCTION}::`,
       LoggerPrefixes.WARN,
       message
     );
@@ -30,7 +30,7 @@ export class ProductionLogger implements ILogger {
   debug(message: string): void {}
   error(message: string): void {
     console.error(
-      `${enumEnvironments.PRODUCTION}${LoggerPrefixes.ERROR}`,
+      `${EnvironmentOptions.PRODUCTION}${LoggerPrefixes.ERROR}`,
       message
     );
   }
@@ -39,14 +39,20 @@ export class ProductionLogger implements ILogger {
 export class StagingLogger implements ILogger {
   info(message: string): void {}
   warn(message: string): void {
-    console.warn(`${enumEnvironments.STAGING}${LoggerPrefixes.WARN}`, message);
+    console.warn(
+      `${EnvironmentOptions.STAGING}${LoggerPrefixes.WARN}`,
+      message
+    );
   }
   debug(message: string): void {
-    console.info(`${enumEnvironments.STAGING}${LoggerPrefixes.INFO}`, message);
+    console.info(
+      `${EnvironmentOptions.STAGING}${LoggerPrefixes.INFO}`,
+      message
+    );
   }
   error(message: string): void {
     console.error(
-      `${enumEnvironments.STAGING}${LoggerPrefixes.ERROR}`,
+      `${EnvironmentOptions.STAGING}${LoggerPrefixes.ERROR}`,
       message
     );
   }
@@ -55,37 +61,37 @@ export class StagingLogger implements ILogger {
 export class DevelopmentLogger implements ILogger {
   info(message: string): void {
     console.info(
-      `${enumEnvironments.DEVELOPMENT}${LoggerPrefixes.INFO}`,
+      `${EnvironmentOptions.DEVELOPMENT}${LoggerPrefixes.INFO}`,
       message
     );
   }
   warn(message: string): void {
     console.warn(
-      `${enumEnvironments.DEVELOPMENT}${LoggerPrefixes.WARN}`,
+      `${EnvironmentOptions.DEVELOPMENT}${LoggerPrefixes.WARN}`,
       message
     );
   }
   debug(message: string): void {
     console.debug(
-      `${enumEnvironments.DEVELOPMENT}${LoggerPrefixes.DEBUG}`,
+      `${EnvironmentOptions.DEVELOPMENT}${LoggerPrefixes.DEBUG}`,
       message
     );
   }
   error(message: string): void {
     console.error(
-      `${enumEnvironments.DEVELOPMENT}${LoggerPrefixes.ERROR}`,
+      `${EnvironmentOptions.DEVELOPMENT}${LoggerPrefixes.ERROR}`,
       message
     );
   }
 }
 
 export class LoggerFactory {
-  public static createLogger(env: typeEnvironment = getEnvironment()): ILogger {
-    if (env === enumEnvironments.PRODUCTION) {
+  public static createLogger(env: NodeEnvironment = getEnvironment()): ILogger {
+    if (env === EnvironmentOptions.PRODUCTION) {
       return new ProductionLogger();
     }
 
-    if (env === enumEnvironments.STAGING) {
+    if (env === EnvironmentOptions.STAGING) {
       return new StagingLogger();
     }
 
