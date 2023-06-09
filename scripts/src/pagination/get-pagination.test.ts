@@ -73,6 +73,16 @@ const testData: TestDataInterface[] = [
 ];
 
 describe("getPagination", () => {
+  it("getPagination() --> {from: 0, to: 9, offest: 10}", () => {
+    const result = getPagination();
+
+    expect(result).toMatchObject({
+      from: 0,
+      to: 9,
+      offset: 10,
+    });
+  });
+
   testData.forEach(({ input, output }) => {
     it(`getPagination(${input[0]}, ${input[1]}) --> {from: ${output.from}, to: ${output.to}, offest: ${output.offset}}`, () => {
       const result = getPagination(...input);
