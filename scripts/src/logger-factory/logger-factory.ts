@@ -1,8 +1,4 @@
-import {
-  NodeEnvironment,
-  EnvironmentOptions,
-  getEnvironment,
-} from "../get-environment/get-environment";
+import { EnvironmentOptions, getEnv } from "../get-environment/get-environment";
 
 enum LoggerPrefixes {
   INFO = "::info::",
@@ -86,7 +82,7 @@ export class DevelopmentLogger implements ILogger {
 }
 
 export class LoggerFactory {
-  public static createLogger(env: NodeEnvironment = getEnvironment()): ILogger {
+  public static createLogger(env: string = getEnv("NODE_ENV")): ILogger {
     if (env === EnvironmentOptions.PRODUCTION) {
       return new ProductionLogger();
     }
