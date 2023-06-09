@@ -23,8 +23,8 @@ export const getPagination = (
   page: Page = 0,
   offset: Offset = 10
 ): IPagination => {
-  page = typeof page === "undefined" ? 0 : +page;
-  offset = typeof offset === "undefined" ? 10 : +offset;
+  page = +page;
+  offset = +offset;
 
   const from = page ? page * offset : 0;
   const to = page ? from + offset - 1 : offset - 1;
