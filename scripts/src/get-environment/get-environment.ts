@@ -15,7 +15,7 @@ export enum EnvironmentOptions {
 export const getEnv = (name: string): string => {
   const value = process.env[name];
 
-  if (!value) {
+  if (typeof value === "undefined") {
     throw new Error(`Missing Environment Variable: process.env['${name}'].`);
   }
 
