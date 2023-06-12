@@ -1,18 +1,6 @@
-# Troubleshooting
+# Misc. Troubleshooting
 
 Common issues encountered while programming.
-
----
-
-## Why does `git pull` not work after updating the MacOS?
-
-**context**:
-
-You may find that when you open a terminal in Visual Studio Code (VSCode) and do a `git pull` an error occurs.
-
-**solution**:
-
-Open a terminal and run `xcode-select --install`
 
 ---
 
