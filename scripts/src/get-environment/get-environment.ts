@@ -1,3 +1,6 @@
+import dotenv from "dotenv";
+dotenv.config();
+
 export enum EnvironmentOptions {
   LOCAL = "dev",
   DEVELOPMENT = "dev",
