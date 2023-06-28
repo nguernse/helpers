@@ -43,25 +43,25 @@ export class StagingLogger implements ILogger {
   log(message: string): void {}
   info(message: string): void {
     console.info(
-      `[${EnvironmentOptions.PRODUCTION}::${LoggerPrefixes.INFO}]`,
+      `[${EnvironmentOptions.STAGING}::${LoggerPrefixes.INFO}]`,
       message
     );
   }
   warn(message: string): void {
     console.warn(
-      `[${EnvironmentOptions.PRODUCTION}::${LoggerPrefixes.WARN}]`,
+      `[${EnvironmentOptions.STAGING}::${LoggerPrefixes.WARN}]`,
       message
     );
   }
   debug(message: string): void {
     console.debug(
-      `[${EnvironmentOptions.PRODUCTION}::${LoggerPrefixes.DEBUG}]`,
+      `[${EnvironmentOptions.STAGING}::${LoggerPrefixes.DEBUG}]`,
       message
     );
   }
   error(message: string): void {
     console.error(
-      `[${EnvironmentOptions.PRODUCTION}::${LoggerPrefixes.ERROR}]`,
+      `[${EnvironmentOptions.STAGING}::${LoggerPrefixes.ERROR}]`,
       message
     );
   }
@@ -70,31 +70,31 @@ export class StagingLogger implements ILogger {
 export class DevelopmentLogger implements ILogger {
   log(message: string): void {
     console.log(
-      `[${EnvironmentOptions.PRODUCTION}::${LoggerPrefixes.LOG}]`,
+      `[${EnvironmentOptions.DEVELOPMENT}::${LoggerPrefixes.LOG}]`,
       message
     );
   }
   info(message: string): void {
     console.info(
-      `[${EnvironmentOptions.PRODUCTION}::${LoggerPrefixes.INFO}]`,
+      `[${EnvironmentOptions.DEVELOPMENT}::${LoggerPrefixes.INFO}]`,
       message
     );
   }
   warn(message: string): void {
     console.warn(
-      `[${EnvironmentOptions.PRODUCTION}::${LoggerPrefixes.WARN}]`,
+      `[${EnvironmentOptions.DEVELOPMENT}::${LoggerPrefixes.WARN}]`,
       message
     );
   }
   debug(message: string): void {
     console.debug(
-      `[${EnvironmentOptions.PRODUCTION}::${LoggerPrefixes.DEBUG}]`,
+      `[${EnvironmentOptions.DEVELOPMENT}::${LoggerPrefixes.DEBUG}]`,
       message
     );
   }
   error(message: string): void {
     console.error(
-      `[${EnvironmentOptions.PRODUCTION}::${LoggerPrefixes.ERROR}]`,
+      `[${EnvironmentOptions.DEVELOPMENT}::${LoggerPrefixes.ERROR}]`,
       message
     );
   }
