@@ -29,7 +29,7 @@ sudo lsof -i:<port_number>
 
 ---
 
-## How can terminate a port in use?
+## How can I terminate a port in use?
 
 **context**:
 
