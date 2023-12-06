@@ -102,3 +102,43 @@ testCases.forEach(({ s1, s2, expected }) => {
     })`
   );
 });
+
+/**
+ * Challenge: sameFrequency
+ *
+ * Write a function given two positive integers,
+ * find if the two numbers have the same number of digits.
+ */
+function sameFrequency(num1: number, num2: number): boolean {
+  const s1 = num1.toString();
+  const s2 = num2.toString();
+
+  if (s1.length !== s2.length) return false;
+
+  const counter: Record<string, number> = {};
+
+  for (let char of s1) {
+    counter[char] = counter[char] ? counter[char] + 1 : 1;
+  }
+
+  for (let char of s2) {
+    if (!counter[char]) return false;
+
+    counter[char] -= 1;
+  }
+
+  return true;
+}
+
+console.log(
+  "sameFrequency(182, 281) => true",
+  sameFrequency(182, 281) ? "(PASS)" : "(FAIL)"
+); // true
+console.log(
+  "sameFrequency(34, 14) => false",
+  sameFrequency(34, 14) ? "(PASS)" : "(FAIL)"
+); // false
+console.log(
+  "sameFrequency(3589578, 5879385) => true",
+  sameFrequency(3589578, 5879385) ? "(PASS)" : "(FAIL)"
+); // true

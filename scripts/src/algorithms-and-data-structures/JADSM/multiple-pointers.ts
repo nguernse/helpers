@@ -68,3 +68,32 @@ console.log(countUniqueValues([1, 1, 1, 2])); // 2
 console.log(countUniqueValues([1, 1, 1, 2, 3, 4, 4, 4, 7, 7])); // 5
 console.log(countUniqueValues([])); // 0
 console.log(countUniqueValues([1])); // 1
+
+function averagePair(nums: number[], target: number): boolean {
+  if (nums.length < 2) return false;
+
+  let p1 = 0;
+  let p2 = nums.length - 1;
+
+  while (p1 < p2) {
+    const n1 = nums[p1];
+    const n2 = nums[p2];
+    const avg = (n1 + n2) / 2;
+
+    if (avg === target) {
+      return true;
+    } else if (avg > target) {
+      p2 -= 1;
+    } else {
+      p1 += 1;
+    }
+  }
+
+  return false;
+}
+
+console.log("averagePair", averagePair([1, 2, 3], 2.5)); // true
+console.log("averagePair", averagePair([1, 3, 3, 5, 6, 7, 10, 12, 19], 8)); // true
+console.log("averagePair", averagePair([-2, -1, -1, 0], -1)); // true
+console.log("averagePair", averagePair([-1, 0, 3, 4, 5, 6], 4.1)); // false
+console.log("averagePair", averagePair([], 4)); // false
