@@ -1,162 +1,196 @@
-export class BSTNode<T> {
+class BNode<T> {
   value: T;
-  left?: BSTNode<T>;
-  right?: BSTNode<T>;
+  left: BNode<T> | null;
+  right: BNode<T> | null;
 
   constructor(value: T) {
     this.value = value;
+    this.left = null;
+    this.right = null;
   }
 }
 
-export class BinarySearchTree<T> {
-  root?: BSTNode<T>;
+class BST<T> {
+  root: BNode<T> | null;
 
-  constructor(values?: T[]) {
-    if (values) {
-      values.forEach((item) => this.insert(item));
-    }
+  constructor() {
+    this.root = null;
   }
 
-  insert(value: T): BSTNode<T> | undefined {
-    const newNode = new BSTNode(value);
+  insert(value: T) {
+    const newNode = new BNode(value);
 
-    if (!this.root) {
+    if (this.root == null) {
       this.root = newNode;
-
-      return this.root;
+      return this;
     }
 
-    let current = this.root;
+    let currentNode = this.root;
 
-    while (true) {
-      if (value === current.value) {
-        return current;
-      } else if (value < current.value) {
-        if (!current.left) {
-          current.left = newNode;
-
-          return current.left;
+    while (currentNode) {
+      if (value === currentNode.value) {
+        break;
+      } else if (value > currentNode.value) {
+        if (!currentNode.right) {
+          currentNode.right = newNode;
+          break;
+        } else {
+          currentNode = currentNode.right;
         }
-
-        current = current.left;
-      } else if (value > current.value) {
-        if (!current.right) {
-          current.right = newNode;
-
-          return current.right;
-        }
-
-        current = current.right;
-      }
-    }
-  }
-
-  find(value: T): BSTNode<T> | undefined {
-    if (!this.root) return undefined;
-
-    let current = this.root;
-
-    while (current) {
-      if (current.value === value) {
-        return current;
-      } else if (current.value < value) {
-        if (!current.right) return undefined;
-
-        current = current.right;
       } else {
-        if (!current.left) return undefined;
-
-        current = current.left;
+        if (!currentNode.left) {
+          currentNode.left = newNode;
+          break;
+        } else {
+          currentNode = currentNode.left;
+        }
       }
     }
 
-    return current;
+    return this;
   }
 
-  has(value: T): boolean {
-    return this.find(value) !== undefined;
+  find(value: T): BNode<T> | undefined {
+    let currentNode = this.root;
+
+    while (currentNode) {
+      if (value === currentNode.value) {
+        return currentNode;
+      } else if (value > currentNode.value) {
+        currentNode = currentNode.right;
+      } else {
+        currentNode = currentNode.left;
+      }
+    }
+
+    return undefined;
+  }
+
+  contains(value: T): boolean {
+    return this.find(value) === undefined;
   }
 
   /**
-   * Breadth First Search
+   * TREE TRAVERSAL STRATEGIES
    *
-   * Create a queue (FIFO list) and a variable to store the values of nodes visited.
+   * Strategies:
+   *  - Breadth-first search, search across the tree each level at a time
+   *  - Depth-first search, go down the tree
+   *    - In-order visit the nodes in order
+   *    - Pre-order visit the node first, then look at the left and then right
+   *    - Post-order visit the node after looking at the left and then right. Visit all children.
+   *
+   * Breadth vs Depth
+   * - Time complexity is the same O(log n)
+   * - If lots of nodes and tree is well-balanced, with many levels
+   *  - DFS is better for space complexity, since BFS would have to manage a large queue
+   * - Wider trees DFS is better for space complexity
+   * - Deep, long tree BFS is better for space complexity
    */
   bfs(): T[] {
     if (!this.root) return [];
 
-    const queue: BSTNode<T>[] = [];
-    const data: T[] = [];
+    // first-in-first-out
+    const queue: (BNode<T> | null)[] = [this.root];
+    const visited: T[] = [];
 
-    queue.push(this.root);
+    while (queue.length > 0) {
+      const currentNode = queue.shift();
 
-    while (queue.length) {
-      const node = queue.shift() as BSTNode<T>;
+      if (!currentNode) continue;
 
-      if (node.left) queue.push(node.left);
-      if (node.right) queue.push(node.right);
+      visited.push(currentNode.value);
 
-      data.push(node.value);
+      if (currentNode.left) queue.push(currentNode.left);
+      if (currentNode.right) queue.push(currentNode.right);
     }
 
-    return data;
+    return visited;
   }
 
-  /**
-   * Depth First Search Pre-Order
-   *
-   * Visit node first, then the left side, then the right side
-   */
-  dfsPreorder(): T[] {
+  bfsRecursive(): T[] {
     if (!this.root) return [];
 
-    const data: T[] = [];
-    this.traversePreorder(this.root, data);
+    function bfsr(queue: (BNode<T> | null)[] = [], visited: T[] = []): T[] {
+      const currentNode = queue.shift();
 
-    return data;
+      if (!currentNode) return visited;
+
+      visited.push(currentNode.value);
+      if (currentNode.left) queue.push(currentNode.left);
+      if (currentNode.right) queue.push(currentNode.right);
+
+      return bfsr(queue, visited);
+    }
+
+    return bfsr([this.root], []);
   }
 
-  traversePreorder(node: BSTNode<T>, data: T[]): void {
-    data.push(node.value);
+  dfsPreOrder(): T[] {
+    if (!this.root) return [];
 
-    if (node.left) this.traversePreorder(node.left, data);
-    if (node.right) this.traversePreorder(node.right, data);
+    const visited: T[] = [];
+
+    function traverse(node: BNode<T>): void {
+      visited.push(node.value);
+      if (node.left) traverse(node.left);
+      if (node.right) traverse(node.right);
+    }
+
+    traverse(this.root);
+
+    return visited;
   }
 
-  /**
-   * DFS Post-Order, traverse left-side bottom up, right-side bottom up
-   */
   dfsPostOrder(): T[] {
     if (!this.root) return [];
 
-    const data: T[] = [];
-    this.traversePostOrder(this.root, data);
+    const visited: T[] = [];
 
-    return data;
+    function traverse(node: BNode<T>): void {
+      if (node.left) traverse(node.left);
+      if (node.right) traverse(node.right);
+      visited.push(node.value);
+    }
+
+    traverse(this.root);
+
+    return visited;
   }
 
-  traversePostOrder(node: BSTNode<T>, data: T[]): void {
-    if (node.left) this.traversePostOrder(node.left, data);
-    if (node.right) this.traversePostOrder(node.right, data);
-
-    data.push(node.value);
-  }
-
-  /**
-   * DFS InOrder, going in sorted order
-   */
   dfsInOrder(): T[] {
     if (!this.root) return [];
 
-    const data: T[] = [];
-    this.traverseInOrder(this.root, data);
+    const visited: T[] = [];
 
-    return data;
-  }
+    function traverse(node: BNode<T>): void {
+      if (node.left) traverse(node.left);
+      visited.push(node.value);
+      if (node.right) traverse(node.right);
+    }
 
-  traverseInOrder(node: BSTNode<T>, data: T[]): void {
-    if (node.left) this.traverseInOrder(node.left, data);
-    data.push(node.value);
-    if (node.right) this.traverseInOrder(node.right, data);
+    traverse(this.root);
+
+    return visited;
   }
 }
+
+const tree = new BST<number>();
+tree.insert(10);
+tree.insert(7);
+tree.insert(12);
+tree.insert(6);
+tree.insert(8);
+tree.insert(13);
+tree.insert(11);
+
+console.log(tree);
+console.log(tree.contains(10));
+console.log(tree.contains(1));
+console.log(tree.contains(2));
+console.log(tree.contains(50));
+console.log("bfs:", tree.bfs());
+console.log("bfs recursive:", tree.bfsRecursive());
+console.log("dfs in-order:", tree.dfsInOrder());
+console.log("dfs post-order:", tree.dfsPostOrder());
+console.log("dfs pre-order:", tree.dfsPreOrder());
